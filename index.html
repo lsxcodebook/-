@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>本地记事本</title>
+		<link rel="stylesheet" href="css/local notepad.css" />
+	</head>
+
+	<body>
+		<!--主体区域-->
+		<section id="app">
+			<!--输入框-->
+			<header>
+				<h1>本地记事本</h1>
+				<input class="newToDo" @keyup.enter="add" autocomplete="off" autofocus="autofocus" placeholder="输入待记事项" v-model="inputItem"/>
+			</header>
+			<!--列表区域-->
+			<section class="list">
+				<ul class="toDoList">
+					<li class="toDo" v-for="(item,index) in list">
+						<div class="view">
+							<span>{{index+1}}.</span>
+							<label>{{item}}</label>
+							<button class="destroy" @click="remove(index)">x</button>
+						</div>
+					</li>
+				</ul>
+			</section>
+			<!--统计与清空-->
+			<footer>
+				<span v-show="list.length!=0"> <strong>{{ list.length }}</strong> items left </span>
+				<button v-show="list.length!=0" class="clear" @click="clear">Clear</button>
+			</footer>
+		</section>
+
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script>
+			var app = new Vue({
+				el: "#app",
+				data: {
+					list: ["看电影","学习","刷b站"],
+					inputItem:""
+				},
+				methods: {
+					add:function(){
+						this.list.push(this.inputItem);
+						this.inputItem = ""
+					},
+					remove:function(index){
+						this.list.splice(index,1);
+					},
+					clear:function(){
+						this.list = [];
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>
